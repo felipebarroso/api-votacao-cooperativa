@@ -1,5 +1,7 @@
 package br.com.cooperativa.model.dto;
 
+import org.springframework.data.domain.Page;
+
 import br.com.cooperativa.model.entity.Assembleia;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +23,10 @@ public @Data class AssembleiaDto {
 	public AssembleiaDto(Assembleia assembleia) {
 		this.id = assembleia.getId();
 		this.descricao = assembleia.getDescricao();
+	}
+	
+	public static Page<AssembleiaDto> converter(Page<Assembleia> assembleias) {
+		return assembleias.map(AssembleiaDto::new);
 	}
 
 }
