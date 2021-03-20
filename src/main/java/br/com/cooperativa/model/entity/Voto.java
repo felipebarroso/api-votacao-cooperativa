@@ -18,7 +18,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "VOTO", uniqueConstraints={@UniqueConstraint(columnNames = {"ID_PAUTA", "ID_ASSOCIADO"})})
+@Table(name = "VOTO", uniqueConstraints={@UniqueConstraint(columnNames = {"ID_PAUTA", "CPF_ASSOCIADO"})})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,11 +35,10 @@ public @Data class Voto implements Serializable {
 	@JoinColumn(name = "ID_PAUTA", nullable = false)
 	private Pauta pauta;
 	
-	@ManyToOne
-	@JoinColumn(name = "ID_ASSOCIADO", nullable = false)
-	private Associado associado;
+	@Column(name = "CPF_ASSOCIADO", nullable = false, length = 11)
+	private String cpfAssociado;
 	
-	@Column(name = "DT_INICIO_VOTACAO", nullable = false)
-	private Boolean voto;
+	@Column(name = "BL_CONCORDA", nullable = false)
+	private Boolean concorda;
 
 }
