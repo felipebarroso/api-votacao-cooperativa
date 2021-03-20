@@ -6,10 +6,10 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 
 @SpringBootApplication
 @EnableSpringDataWebSupport
-public class VotacaoCoopApplication {
+public class VotacaoCooperativaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(VotacaoCoopApplication.class, args);
+		SpringApplication.run(VotacaoCooperativaApplication.class, args);
 	}
 
 }

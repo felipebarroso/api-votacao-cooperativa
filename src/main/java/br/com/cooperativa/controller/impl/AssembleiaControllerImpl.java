@@ -3,6 +3,7 @@ package br.com.cooperativa.controller.impl;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import br.com.cooperativa.model.form.AssembleiaForm;
 import br.com.cooperativa.repository.AssembleiaRepository;
 
 @RestController
-@RequestMapping("/assembleia")
+@RequestMapping("/assembleias")
 public class AssembleiaControllerImpl implements AssembleiaController {
 	
 	@Autowired
@@ -36,7 +37,7 @@ public class AssembleiaControllerImpl implements AssembleiaController {
 	public ResponseEntity<AssembleiaDto> cadastrar(@RequestBody @Valid AssembleiaForm assembleiaForm) {
 		Assembleia assembleia = assembleiaForm.converter();
 		assembleia = assembleiaRepository.save(assembleia);
-		return ResponseEntity.ok(new AssembleiaDto(assembleia));
+		return ResponseEntity.status(HttpStatus.CREATED).body(new AssembleiaDto(assembleia));
 	}
 
 }

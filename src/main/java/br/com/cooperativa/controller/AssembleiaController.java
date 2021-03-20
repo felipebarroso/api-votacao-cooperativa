@@ -14,7 +14,8 @@ public interface AssembleiaController {
 	
 	@ApiOperation(value = "Pesquisar assembleia pelo id")
 	  @ApiResponses(value = {
-	          @ApiResponse(code = 200, message = "Sucesso"),
+			  @ApiResponse(code = 200, message = "Sucesso"),
+	          @ApiResponse(code = 204, message = "Registro não encontrado"),
 	          @ApiResponse(code = 401, message = "Não autorizado"),
 	          @ApiResponse(code = 404, message = "Recurso não encontrado")
 	  })
@@ -23,6 +24,7 @@ public interface AssembleiaController {
 	@ApiOperation(value = "Cadastrar assembleia")
 	  @ApiResponses(value = {
 	          @ApiResponse(code = 200, message = "Sucesso"),
+	          @ApiResponse(code = 201, message = "Cadastrado"),
 	          @ApiResponse(code = 401, message = "Não autorizado"),
 	          @ApiResponse(code = 404, message = "Recurso não encontrado")
 	  })
