@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cooperativa.controller.PautaController;
 import br.com.cooperativa.exception.NotFoundException;
-import br.com.cooperativa.model.dto.AssembleiaDto;
 import br.com.cooperativa.model.dto.PautaDto;
 import br.com.cooperativa.model.entity.Assembleia;
 import br.com.cooperativa.model.entity.Pauta;

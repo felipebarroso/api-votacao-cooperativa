@@ -37,8 +37,8 @@ public @Data class PautaDto {
 		this.dataFimVotacao = pauta.getDataFimVotacao();
 		this.quantidadeVotosSim = pauta.getQuantidadeVotosSim();
 		this.quantidadeVotosNao = pauta.getQuantidadeVotosNao();
-		this.encerrada = this.dataFimVotacao.isBefore(LocalDateTime.now());
-		this.aprovada = this.quantidadeVotosSim > this.quantidadeVotosNao;
+		this.encerrada = dataFimVotacao != null ? this.dataFimVotacao.isBefore(LocalDateTime.now()) : false;
+		this.aprovada =  this.quantidadeVotosSim != null && this.quantidadeVotosNao != null && this.quantidadeVotosSim > this.quantidadeVotosNao;
 	}
 	
 	public static Page<PautaDto> converter(Page<Pauta> pautas) {
