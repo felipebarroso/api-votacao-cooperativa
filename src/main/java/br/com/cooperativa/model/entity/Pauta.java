@@ -45,9 +45,9 @@ public @Data class Pauta implements Serializable {
 	private LocalDateTime dataFimVotacao;
 	
 	@Column(name = "QTD_VOTOS_SIM")
-	private LocalDateTime quantidadeVotosSim;
+	private Long quantidadeVotosSim;
 	
 	@Column(name = "QTD_VOTOS_NAO")
-	private LocalDateTime quantidadeVotosNao;
+	private Long quantidadeVotosNao;
 
 }
