@@ -1,6 +1,7 @@
 package br.com.cooperativa.model.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,5 +41,8 @@ public @Data class Voto implements Serializable {
 	
 	@Column(name = "BL_CONCORDA", nullable = false)
 	private Boolean concorda;
+	
+	@Column(name = "DT_VOTO")
+	private LocalDateTime dataVoto;
 
 }
