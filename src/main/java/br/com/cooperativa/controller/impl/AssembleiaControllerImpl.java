@@ -40,13 +40,13 @@ public class AssembleiaControllerImpl implements AssembleiaController {
 	public ResponseEntity<AssembleiaDto> pesquisar(@PathVariable Long id) {
 		return assembleiaRepository.findById(id)
 				.map(assembleia -> ResponseEntity.ok(new AssembleiaDto(assembleia)))
-				.orElse(ResponseEntity.noContent().build());
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
 	public ResponseEntity<AssembleiaDto> cadastrar(@RequestBody @Valid AssembleiaForm assembleiaForm) {
 		Assembleia assembleia = assembleiaForm.converter();
-		assembleia = assembleiaRepository.save(assembleia);
+		assembleiaRepository.save(assembleia);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new AssembleiaDto(assembleia));
 	}
 	
