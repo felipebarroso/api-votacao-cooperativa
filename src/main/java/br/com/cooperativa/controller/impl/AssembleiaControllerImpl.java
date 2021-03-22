@@ -32,8 +32,8 @@ public class AssembleiaControllerImpl implements AssembleiaController {
 	@GetMapping
 	public Page<AssembleiaDto> pesquisar(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page, 
 			@RequestParam(value = "size", defaultValue = "10", required = false)  Integer size) {
-		Page<Assembleia> assembleias = assembleiaRepository.findAll(PageRequest.of(page, size));
-		return AssembleiaDto.converter(assembleias);
+		final Page<Assembleia> assembleias = assembleiaRepository.findAll(PageRequest.of(page, size));
+		return AssembleiaDto.converterParaDto(assembleias);
 	}
 	
 	@GetMapping("/{id}")
@@ -45,7 +45,7 @@ public class AssembleiaControllerImpl implements AssembleiaController {
 	
 	@PostMapping
 	public ResponseEntity<AssembleiaDto> cadastrar(@RequestBody @Valid AssembleiaForm assembleiaForm) {
-		Assembleia assembleia = assembleiaForm.converter();
+		Assembleia assembleia = assembleiaForm.converterDtoParaAssembleia();
 		assembleiaRepository.save(assembleia);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new AssembleiaDto(assembleia));
 	}

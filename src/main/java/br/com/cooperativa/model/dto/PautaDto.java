@@ -41,7 +41,7 @@ public @Data class PautaDto {
 		this.aprovada =  this.quantidadeVotosSim != null && this.quantidadeVotosNao != null && this.quantidadeVotosSim > this.quantidadeVotosNao;
 	}
 	
-	public static Page<PautaDto> converter(Page<Pauta> pautas) {
+	public static Page<PautaDto> converterParaDto(Page<Pauta> pautas) {
 		return pautas.map(PautaDto::new);
 	}
 

@@ -1,5 +1,6 @@
 package br.com.cooperativa.controller.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -45,9 +46,9 @@ public class PautaControllerImpl implements PautaController {
 	
 	@GetMapping
 	public Page<PautaDto> pesquisar(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page, 
-			@RequestParam(value = "size", defaultValue = "10", required = false)  Integer size){
+			@RequestParam(value = "size", defaultValue = "10", required = false)  Integer size) {
 		Page<Pauta> pautas = pautaRepository.findAll(PageRequest.of(page, size));
-		return PautaDto.converter(pautas);
+		return PautaDto.converterParaDto(pautas);
 	}
 	
 	@GetMapping("/{id}")
@@ -58,23 +59,29 @@ public class PautaControllerImpl implements PautaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaForm pautaForm){
+	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaForm pautaForm) {
 		Optional<Assembleia> assembleia = assembleiaRepository.findById(pautaForm.getAssembleiaId());
 		
 		if(!assembleia.isPresent())
 			throw new NotFoundException("Assembleia informada não encontada");
 		
-		Pauta pauta = pautaForm.converter(assembleia.get());
+		Pauta pauta = pautaForm.converterDtoParaPauta(assembleia.get());
 		pautaRepository.save(pauta);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(new PautaDto(pauta));
 	}
 	
-	@PutMapping
-	public ResponseEntity<PautaDto> iniciarSessao(@RequestBody @Valid InicioPautaForm inicioPautaForm){
-		Pauta pauta = pautaService.iniciarSessaoVotacaoPauta(inicioPautaForm);
-		PautaDto pautaDto = new PautaDto(pauta);
+	@PutMapping("/inicia")
+	public ResponseEntity<PautaDto> iniciarSessao(@RequestBody @Valid InicioPautaForm inicioPautaForm) {
+		final Pauta pauta = pautaService.iniciarSessaoVotacaoPauta(inicioPautaForm);
+		final PautaDto pautaDto = new PautaDto(pauta);
 		return ResponseEntity.ok(pautaDto);
+	}
+	
+	@PutMapping("/contabiliza")
+	public ResponseEntity<List<PautaDto>> contabilizarVotos() {
+		List<PautaDto> pautasEncerradas = pautaService.pesquisarPautasEncerradasParaContabilizarVotos();
+		return ResponseEntity.ok(pautasEncerradas);
 	}
 	
 }

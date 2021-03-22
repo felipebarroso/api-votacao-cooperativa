@@ -19,7 +19,8 @@ public interface AssembleiaController {
 	        @ApiResponse(code = 204, message = "Registro não encontrado"),
 	        @ApiResponse(code = 400, message = "Requisição inválida"),
 	        @ApiResponse(code = 401, message = "Não autorizado"),
-	        @ApiResponse(code = 404, message = "Recurso não encontrado")
+	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
+	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
 	Page<AssembleiaDto> pesquisar(Integer page, Integer size);
 	
@@ -29,7 +30,8 @@ public interface AssembleiaController {
 	        @ApiResponse(code = 204, message = "Registro não encontrado"),
 	        @ApiResponse(code = 400, message = "Requisição inválida"),
 	        @ApiResponse(code = 401, message = "Não autorizado"),
-	        @ApiResponse(code = 404, message = "Recurso não encontrado")
+	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
+	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
 	ResponseEntity<AssembleiaDto> pesquisar(Long id);
 	
@@ -39,7 +41,8 @@ public interface AssembleiaController {
 	        @ApiResponse(code = 201, message = "Cadastrado"),
 	        @ApiResponse(code = 400, message = "Requisição inválida"),
 	        @ApiResponse(code = 401, message = "Não autorizado"),
-	        @ApiResponse(code = 404, message = "Recurso não encontrado")
+	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
+	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
 	ResponseEntity<AssembleiaDto> cadastrar(AssembleiaForm assembleiaForm);
 

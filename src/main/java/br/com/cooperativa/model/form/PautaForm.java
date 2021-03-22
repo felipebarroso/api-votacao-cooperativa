@@ -27,7 +27,7 @@ public @Data class PautaForm {
 	@NotNull(message = "A pauta deve pertencer a uma assembleia")
 	private Long assembleiaId;
 
-	public Pauta converter(Assembleia assembleia) {
+	public Pauta converterDtoParaPauta(Assembleia assembleia) {
 		return Pauta.builder().descricao(this.descricao).assembleia(assembleia).build();
 	}
 

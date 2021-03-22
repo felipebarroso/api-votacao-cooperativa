@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -32,15 +30,14 @@ public @Data class Voto implements Serializable {
     @Column(name = "ID", updatable = false)
 	private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name = "ID_PAUTA", nullable = false)
-	private Pauta pauta;
+	@Column(name = "ID_PAUTA", nullable = false)
+	private Long pautaId;
 	
 	@Column(name = "CPF_ASSOCIADO", nullable = false, length = 11)
 	private String cpfAssociado;
 	
-	@Column(name = "BL_CONCORDA", nullable = false)
-	private Boolean concorda;
+	@Column(name = "BL_CONCORDA_PAUTA", nullable = false)
+	private Boolean concordaComPauta;
 	
 	@Column(name = "DT_VOTO")
 	private LocalDateTime dataVoto;

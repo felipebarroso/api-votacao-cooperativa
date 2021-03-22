@@ -25,7 +25,7 @@ public @Data class AssembleiaDto {
 		this.descricao = assembleia.getDescricao();
 	}
 	
-	public static Page<AssembleiaDto> converter(Page<Assembleia> assembleias) {
+	public static Page<AssembleiaDto> converterParaDto(Page<Assembleia> assembleias) {
 		return assembleias.map(AssembleiaDto::new);
 	}
 

@@ -22,7 +22,7 @@ public @Data class AssembleiaForm {
 	@Size(max=200, message = "A descrição da assembleia pode conter no máximo 200 caracteres")
 	private String descricao;
 
-	public Assembleia converter() {
+	public Assembleia converterDtoParaAssembleia() {
 		return Assembleia.builder().descricao(this.descricao).build();
 	}
 

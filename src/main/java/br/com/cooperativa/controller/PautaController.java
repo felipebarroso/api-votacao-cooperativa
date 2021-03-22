@@ -1,5 +1,7 @@
 package br.com.cooperativa.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
@@ -20,7 +22,8 @@ public interface PautaController {
 	        @ApiResponse(code = 204, message = "Registro não encontrado"),
 	        @ApiResponse(code = 400, message = "Requisição inválida"),
 	        @ApiResponse(code = 401, message = "Não autorizado"),
-	        @ApiResponse(code = 404, message = "Recurso não encontrado")
+	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
+	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
 	Page<PautaDto> pesquisar(Integer page, Integer size);
 	
@@ -30,7 +33,8 @@ public interface PautaController {
 	        @ApiResponse(code = 204, message = "Registro não encontrado"),
 	        @ApiResponse(code = 400, message = "Requisição inválida"),
 	        @ApiResponse(code = 401, message = "Não autorizado"),
-	        @ApiResponse(code = 404, message = "Recurso não encontrado")
+	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
+	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
 	ResponseEntity<PautaDto> pesquisar(Long id);
 	
@@ -40,7 +44,8 @@ public interface PautaController {
 	        @ApiResponse(code = 201, message = "Cadastrado"),
 	        @ApiResponse(code = 400, message = "Requisição inválida"),
 	        @ApiResponse(code = 401, message = "Não autorizado"),
-	        @ApiResponse(code = 404, message = "Recurso não encontrado")
+	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
+	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
 	ResponseEntity<PautaDto> cadastrar(PautaForm pautaForm);
 	
@@ -51,8 +56,19 @@ public interface PautaController {
 	        @ApiResponse(code = 400, message = "Requisição inválida"),
 	        @ApiResponse(code = 401, message = "Não autorizado"),
 	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
-	        @ApiResponse(code = 422, message = "Erro de validaçã")
+	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
 	ResponseEntity<PautaDto> iniciarSessao(InicioPautaForm inicioPautaForm);
+	
+	@ApiOperation(value = "Contabilizar votos das pautas encerradas")
+	@ApiResponses(value = {
+	        @ApiResponse(code = 200, message = "Sucesso"),
+	        @ApiResponse(code = 201, message = "Cadastrado"),
+	        @ApiResponse(code = 400, message = "Requisição inválida"),
+	        @ApiResponse(code = 401, message = "Não autorizado"),
+	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
+	        @ApiResponse(code = 422, message = "Erro de validação")
+	})
+	public ResponseEntity<List<PautaDto>> contabilizarVotos();
 
 }
