@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import br.com.cooperativa.exception.GenericException;
-import br.com.cooperativa.exception.IntegracaoException;
 import br.com.cooperativa.exception.UnprocessableEntityException;
 import br.com.cooperativa.model.dto.RespostaRequisicaoCpfDto;
 import br.com.cooperativa.model.entity.Pauta;

@@ -39,7 +39,7 @@ public @Data class Voto implements Serializable {
 	@Column(name = "BL_CONCORDA_PAUTA", nullable = false)
 	private Boolean concordaComPauta;
 	
-	@Column(name = "DT_VOTO")
+	@Column(name = "DT_VOTO", nullable = false)
 	private LocalDateTime dataVoto;
 
 }
