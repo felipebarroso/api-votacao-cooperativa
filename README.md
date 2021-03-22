@@ -2,5 +2,6 @@
 API Rest para Votações
 
 # Modelo de dados
-![Entityrelationshipdiagram1](https://user-images.githubusercontent.com/42699918/111928953-db5c0a80-8a93-11eb-90c4-f43af5cb7ed9.png)
+![Entityrelationshipdiagram1](https://user-images.githubusercontent.com/42699918/111929313-c59b1500-8a94-11eb-9f2b-a99ec3e73e7f.png)
+
 
