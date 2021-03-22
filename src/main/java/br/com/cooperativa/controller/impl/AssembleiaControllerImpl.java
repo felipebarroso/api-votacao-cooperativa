@@ -29,21 +29,21 @@ public class AssembleiaControllerImpl implements AssembleiaController {
 	private AssembleiaRepository assembleiaRepository;
 	
 	
-	@GetMapping
+	@GetMapping({"/v1.0", "/v1.1", "/v1.2"})
 	public Page<AssembleiaDto> pesquisar(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page, 
 			@RequestParam(value = "size", defaultValue = "10", required = false)  Integer size) {
 		final Page<Assembleia> assembleias = assembleiaRepository.findAll(PageRequest.of(page, size));
 		return AssembleiaDto.converterParaDto(assembleias);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping({"/v1.0/{id}", "/v1.1/{id}"})
 	public ResponseEntity<AssembleiaDto> pesquisar(@PathVariable Long id) {
 		return assembleiaRepository.findById(id)
 				.map(assembleia -> ResponseEntity.ok(new AssembleiaDto(assembleia)))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@PostMapping
+	@PostMapping("/v1.0")
 	public ResponseEntity<AssembleiaDto> cadastrar(@RequestBody @Valid AssembleiaForm assembleiaForm) {
 		Assembleia assembleia = assembleiaForm.converterDtoParaAssembleia();
 		assembleiaRepository.save(assembleia);

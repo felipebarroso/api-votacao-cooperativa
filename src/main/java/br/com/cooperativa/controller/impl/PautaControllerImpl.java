@@ -44,21 +44,21 @@ public class PautaControllerImpl implements PautaController {
 	private AssembleiaRepository assembleiaRepository;
 	
 	
-	@GetMapping
+	@GetMapping("/v1.0")
 	public Page<PautaDto> pesquisar(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page, 
 			@RequestParam(value = "size", defaultValue = "10", required = false)  Integer size) {
 		Page<Pauta> pautas = pautaRepository.findAll(PageRequest.of(page, size));
 		return PautaDto.converterParaDto(pautas);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/v1.0/{id}")
 	public ResponseEntity<PautaDto> pesquisar(@PathVariable Long id) {
 		return pautaService.pesquisarPautaPorId(id)
 				.map(pauta -> ResponseEntity.ok(new PautaDto(pauta)))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@PostMapping
+	@PostMapping("/v1.0")
 	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaForm pautaForm) {
 		Optional<Assembleia> assembleia = assembleiaRepository.findById(pautaForm.getAssembleiaId());
 		
@@ -71,14 +71,14 @@ public class PautaControllerImpl implements PautaController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(new PautaDto(pauta));
 	}
 	
-	@PutMapping("/inicia")
+	@PutMapping("/v1.0/inicia")
 	public ResponseEntity<PautaDto> iniciarSessao(@RequestBody @Valid InicioPautaForm inicioPautaForm) {
 		final Pauta pauta = pautaService.iniciarSessaoVotacaoPauta(inicioPautaForm);
 		final PautaDto pautaDto = new PautaDto(pauta);
 		return ResponseEntity.ok(pautaDto);
 	}
 	
-	@PutMapping("/contabiliza")
+	@PutMapping("/v1.0/contabiliza")
 	public ResponseEntity<List<PautaDto>> contabilizarVotos() {
 		List<PautaDto> pautasEncerradas = pautaService.pesquisarPautasEncerradasParaContabilizarVotos();
 		return ResponseEntity.ok(pautasEncerradas);

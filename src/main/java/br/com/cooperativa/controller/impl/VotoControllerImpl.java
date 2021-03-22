@@ -30,7 +30,7 @@ public class VotoControllerImpl implements VotoController {
 	private VotoService votoService;
 	
 	
-	@PostMapping
+	@PostMapping("/v1.0")
 	public ResponseEntity<String> votar(@RequestBody @Valid RegistroVotoForm votoForm) {
 		Optional<Pauta> pautaOp = pautaService.pesquisarPautaPorId(votoForm.getPautaId());
 		

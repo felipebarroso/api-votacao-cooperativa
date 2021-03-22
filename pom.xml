@@ -12,7 +12,7 @@
 	
 	<groupId>br.com.cooperativa</groupId>
 	<artifactId>votacao-cooperativa</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>votacao-coop</name>
 	<description>Serviço para gerenciamento de votações da cooperativa</description>
 	
