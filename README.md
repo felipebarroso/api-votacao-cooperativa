@@ -4,7 +4,7 @@ Este projeto tem o objetivo de registrar e contabilizar os votos dos associados 
 
 ## Configurações do Projeto ##
 
-* Necessário alterar configuração do arquivo application.properties para indicar um banco de dados Postgres.
+* Necessário alterar configuração do arquivo "application.properties" para indicar um banco de dados Postgres.
 * Utiliza lombok, necessário instalar na IDE (utilizado Spring Tool Suite 4).
 * Start configurado para porta 8080.
 * Swagger pode ser acessadoo em http://localhost:8080/swagger-ui.html#
@@ -16,7 +16,10 @@ Este projeto tem o objetivo de registrar e contabilizar os votos dos associados 
 
 ## Teste de desempenho ##
 
-O arquivo teste_desempenho_jmeter.rar na pasta testes contém:
+Foi realizado teste de desempenho no serviço responsável por receber votos dos associados, utilizando a ferramenta JMeter 5.4. <br />
+Método: POST <br />
+Serviço: /votos/v1.0 <br />
+O arquivo "teste_desempenho_jmeter.rar" na pasta "testes" contém:
 
 * Arquivo do projeto do JMeter (.jmx).
 * Relatórios gerados pelo JMeter (.csv).
