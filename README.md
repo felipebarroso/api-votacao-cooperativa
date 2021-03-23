@@ -1,5 +1,6 @@
 # Votação Cooperativa #
-API Rest para Votações da Cooperativa
+
+Este projeto tem o objetivo de registrar e contabilizar os votos dos associados de uma coperativa durante as sessões de pautas abertas em assembleias.
 
 ### Configurações do Projeto ###
 
@@ -7,7 +8,7 @@ API Rest para Votações da Cooperativa
 * Utiliza lombok, necessário instalar na IDE (utilizado Spring Tool Suite 4).
 * Start configurado para porta 8080.
 * Swagger pode ser acessadoo em http://localhost:8080/swagger-ui.html#
-* Aplicação está configurada em três versões (1.0, 1.1 e 1.2) apenas para carater de exemplificação.
+* Aplicação está configurada em três versões (1.0, 1.1 e 1.2) para exemplificação de versionamento.
 
 ### Modelo de dados ###
 
