@@ -1,4 +1,4 @@
-package br.com.cooperativa.votacao;
+package br.com.cooperativa;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
