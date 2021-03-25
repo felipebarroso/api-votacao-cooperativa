@@ -17,8 +17,12 @@ import br.com.cooperativa.model.form.RegistroVotoForm;
 import br.com.cooperativa.repository.VotoRepository;
 import br.com.cooperativa.util.JsonUtil;
 import br.com.cooperativa.util.RequestUtil;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Service
+@AllArgsConstructor
+@NoArgsConstructor
 public class VotoService {
 	
 	@Value("${uri.valida.cpf}")

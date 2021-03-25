@@ -5,31 +5,63 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import br.com.cooperativa.exception.UnprocessableEntityException;
 import br.com.cooperativa.model.entity.Assembleia;
 import br.com.cooperativa.model.entity.Pauta;
+import br.com.cooperativa.repository.PautaRepository;
+import br.com.cooperativa.repository.VotoRepository;
 import br.com.cooperativa.service.PautaService;
 
 public class ValidacaoPautaTeste {
 	
+	@Mock
+	PautaRepository pautaRepository = Mockito.mock(PautaRepository.class);
+
+	@Mock
+	VotoRepository votoRepository = Mockito.mock(VotoRepository.class);
+	
+	private PautaService pautaService;
+	
+	private final Long ID = 1L;
+	
+	
+	@BeforeEach
+	public void beforeEach() {
+		this.pautaService = new PautaService(ID, pautaRepository, votoRepository);
+	}
+	
+	private Pauta construirPauta(LocalDateTime dataInicio, LocalDateTime dataFim) {
+		return Pauta.builder()
+				.assembleia(Assembleia.builder().id(ID).descricao("Assembleia teste").build())
+				.dataInicioVotacao(dataInicio)
+				.dataFimVotacao(dataFim)
+				.descricao("Pauta teste")
+				.id(ID)
+				.build();
+	}
+	
+	@Test
+	public void devePesquisarPautaSemContabilizarVotos() {
+		Pauta pauta = construirPauta(LocalDateTime.now(), LocalDateTime.now().plusMinutes(5));
+		
+		Mockito.when(pautaRepository.findById(ID)).thenReturn(Optional.of(pauta));
+		Optional<Pauta> pautaOp = pautaService.pesquisarPautaPorId(ID);
+		
+		assertTrue(pautaOp.get().getId() == ID);
+	}
+	
 	@Test
 	public void devePermitirIniciarSessaoPauta() {
 		try {
-			
-			Pauta pauta = Pauta.builder()
-					.assembleia(Assembleia.builder().id(1L).descricao("Assembleia teste").build())
-					.dataInicioVotacao(null)
-					.dataFimVotacao(null)
-					.descricao("Pauta teste")
-					.id(1L)
-					.build();
-			
-			PautaService pautaService = new PautaService();
+			Pauta pauta = construirPauta(null, null);
 			pautaService.validarSeSessaoPodeSerIniciada(pauta);
-			
 		} catch (UnprocessableEntityException e) {
 			fail();
 		}
@@ -39,20 +71,9 @@ public class ValidacaoPautaTeste {
 	
 	@Test
 	public void naoDevePermitirIniciarSessaoPauta() {
-		
 		UnprocessableEntityException exception = assertThrows(UnprocessableEntityException.class, () -> {
-			
-			Pauta pauta = Pauta.builder()
-					.assembleia(Assembleia.builder().id(1L).descricao("Assembleia teste").build())
-					.dataInicioVotacao(LocalDateTime.now())
-					.dataFimVotacao(LocalDateTime.now().plusMinutes(5))
-					.descricao("Pauta teste")
-					.id(1L)
-					.build();
-			
-			PautaService pautaService = new PautaService();
+			Pauta pauta = construirPauta(LocalDateTime.now(), LocalDateTime.now().plusMinutes(5));
 			pautaService.validarSeSessaoPodeSerIniciada(pauta);
-			
 		});
 
 	    assertTrue(exception != null ? true : false);
@@ -62,18 +83,8 @@ public class ValidacaoPautaTeste {
 	@Test
 	public void devePermitirVotarSessaoPauta() {
 		try {
-			
-			Pauta pauta = Pauta.builder()
-					.assembleia(Assembleia.builder().id(1L).descricao("Assembleia teste").build())
-					.dataInicioVotacao(LocalDateTime.now())
-					.dataFimVotacao(LocalDateTime.now().plusMinutes(5))
-					.descricao("Pauta teste")
-					.id(1L)
-					.build();
-			
-			PautaService pautaService = new PautaService();
+			Pauta pauta = construirPauta(LocalDateTime.now(), LocalDateTime.now().plusMinutes(5));
 			pautaService.validarSeSessaoPodeSerVotada(pauta);
-			
 		} catch (UnprocessableEntityException e) {
 			fail();
 		}
@@ -83,42 +94,19 @@ public class ValidacaoPautaTeste {
 	
 	@Test
 	public void naoDevePermitirVotarSessaoPautaEncerrada() {
-		
 		UnprocessableEntityException exception = assertThrows(UnprocessableEntityException.class, () -> {
-			
-			Pauta pauta = Pauta.builder()
-					.assembleia(Assembleia.builder().id(1L).descricao("Assembleia teste").build())
-					.dataInicioVotacao(LocalDateTime.now().minusMinutes(5))
-					.dataFimVotacao(LocalDateTime.now().minusMinutes(1))
-					.descricao("Pauta teste")
-					.id(1L)
-					.build();
-			
-			PautaService pautaService = new PautaService();
+			Pauta pauta = construirPauta(LocalDateTime.now().minusMinutes(5), LocalDateTime.now().minusMinutes(1));
 			pautaService.validarSeSessaoPodeSerVotada(pauta);
-			
 		});
 
 	    assertTrue(exception != null ? true : false);
-		
 	}
 	
 	@Test
 	public void naoDevePermitirVotarSessaoPautaNaoIniciada() {
-		
 		UnprocessableEntityException exception = assertThrows(UnprocessableEntityException.class, () -> {
-			
-			Pauta pauta = Pauta.builder()
-					.assembleia(Assembleia.builder().id(1L).descricao("Assembleia teste").build())
-					.dataInicioVotacao(null)
-					.dataFimVotacao(null)
-					.descricao("Pauta teste")
-					.id(1L)
-					.build();
-			
-			PautaService pautaService = new PautaService();
+			Pauta pauta = construirPauta(null, null);
 			pautaService.validarSeSessaoPodeSerVotada(pauta);
-			
 		});
 
 	    assertTrue(exception != null ? true : false);

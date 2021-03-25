@@ -19,8 +19,12 @@ import br.com.cooperativa.model.entity.Pauta;
 import br.com.cooperativa.model.form.InicioPautaForm;
 import br.com.cooperativa.repository.PautaRepository;
 import br.com.cooperativa.repository.VotoRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Service
+@AllArgsConstructor
+@NoArgsConstructor
 public class PautaService {
 	
 	@Value("${pauta.sessao.duracao.minutos}")
@@ -69,8 +73,15 @@ public class PautaService {
 	}
 	
 	public void validarSeSessaoEncerrada(Pauta pauta) {
-		if(pauta.getDataFimVotacao() != null && pauta.getDataFimVotacao().isBefore(LocalDateTime.now()))
+		if(verificarSeSessaoEncerrada(pauta))
 			throw new UnprocessableEntityException("A sessão de votação da pauta já está encerrada");
+	}
+	
+	public boolean verificarSeSessaoEncerrada(Pauta pauta) {
+		if(pauta.getDataFimVotacao() != null && pauta.getDataFimVotacao().isBefore(LocalDateTime.now()))
+			return true;
+		else
+			return false;
 	}
 	
 	private Pauta preencherDadosParaIniciarSessao(Pauta pauta, InicioPautaForm inicioPautaForm) {
@@ -82,9 +93,7 @@ public class PautaService {
 	}
 	
 	public Pauta contabilizarVotosSeSessaoEncerrada(Pauta pauta) {
-		if(pauta.getDataInicioVotacao() != null && pauta.getDataFimVotacao() != null 
-				&& pauta.getDataFimVotacao().isBefore(LocalDateTime.now()) 
-				&& pauta.getQuantidadeVotosNao() == null && pauta.getQuantidadeVotosSim() == null) {
+		if(verificarSeSessaoEncerrada(pauta) && pauta.getQuantidadeVotosNao() == null && pauta.getQuantidadeVotosSim() == null) {
 			
 			final QuantidadeVotosDto quantidadeVotosDto = votoRepository.pesquisarQuantidadeDeVotosPorPautaFinalizada(pauta.getId(), 
 					pauta.getDataInicioVotacao(), pauta.getDataFimVotacao());
