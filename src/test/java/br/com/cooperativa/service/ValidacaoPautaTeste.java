@@ -1,4 +1,4 @@
-package br.com.cooperativa.pautas;
+package br.com.cooperativa.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,8 +9,8 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import br.com.cooperativa.exception.UnprocessableEntityException;
 import br.com.cooperativa.model.dto.QuantidadeVotosDto;
@@ -18,14 +18,13 @@ import br.com.cooperativa.model.entity.Assembleia;
 import br.com.cooperativa.model.entity.Pauta;
 import br.com.cooperativa.repository.PautaRepository;
 import br.com.cooperativa.repository.VotoRepository;
-import br.com.cooperativa.service.PautaService;
 
 public class ValidacaoPautaTeste {
 	
-	@Mock
+	@MockBean
 	PautaRepository pautaRepository = Mockito.mock(PautaRepository.class);
 
-	@Mock
+	@MockBean
 	VotoRepository votoRepository = Mockito.mock(VotoRepository.class);
 	
 	private PautaService pautaService;
