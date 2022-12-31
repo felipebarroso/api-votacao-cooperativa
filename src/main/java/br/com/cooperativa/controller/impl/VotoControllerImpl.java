@@ -18,9 +18,11 @@ import br.com.cooperativa.model.entity.Pauta;
 import br.com.cooperativa.model.form.RegistroVotoForm;
 import br.com.cooperativa.service.PautaService;
 import br.com.cooperativa.service.VotoService;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/votos")
+@Slf4j
 public class VotoControllerImpl implements VotoController {
 	
 	@Autowired
@@ -32,6 +34,7 @@ public class VotoControllerImpl implements VotoController {
 	
 	@PostMapping("/v1.0")
 	public ResponseEntity<String> votar(@RequestBody @Valid RegistroVotoForm votoForm) {
+		log.info("votar");
 		Optional<Pauta> pautaOp = pautaService.pesquisarPautaPorId(votoForm.getPautaId());
 		
 		if(!pautaOp.isPresent())
@@ -39,9 +42,9 @@ public class VotoControllerImpl implements VotoController {
 		
 		final Pauta pauta = pautaOp.get();
 		pautaService.validarSeSessaoPodeSerVotada(pauta);
-		votoService.processarVotoAssociadoPauta(pauta, votoForm);
+		votoService.registrarVotoDoAssociadoNaPauta(pauta, votoForm);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body("Voto registrado com sucesso");
+		return ResponseEntity.status(HttpStatus.CREATED).body("Seu voto foi registrado e seráo processado. Aguarde a confirmação por e-mail.");
 	}
 	
 }

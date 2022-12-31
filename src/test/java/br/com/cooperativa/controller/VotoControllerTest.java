@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 
 import br.com.cooperativa.controller.impl.VotoControllerImpl;
 import br.com.cooperativa.model.entity.Assembleia;
@@ -21,7 +22,8 @@ import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 
 @WebMvcTest(controllers = VotoControllerImpl.class)
-public class VotoControllerTeste {
+@ActiveProfiles("test")
+public class VotoControllerTest {
 	
 	@Autowired
 	private VotoControllerImpl votoController;
@@ -32,7 +34,7 @@ public class VotoControllerTeste {
 	@MockBean
 	private PautaService pautaService;
 	
-	private final Long ID = 1L;
+	private static final Long ID = 1L;
 	
 	
 	@BeforeEach

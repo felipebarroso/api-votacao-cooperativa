@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,5 +50,37 @@ public @Data class Pauta implements Serializable {
 	
 	@Column(name = "QTD_VOTOS_NAO")
 	private Long quantidadeVotosNao;
+	
+	
+	@Transient
+	private Integer quantidadeVotosPendentes;
+	
+	public void setQuantidadeVotosSim(Long quantidadeVotosSim) {
+		this.quantidadeVotosSim = quantidadeVotosSim == null ? 0 : quantidadeVotosSim;
+	}
+	
+	public void setQuantidadeVotosNao(Long quantidadeVotosNao) {
+		this.quantidadeVotosNao = quantidadeVotosNao == null ? 0 : quantidadeVotosNao;
+	}
+	
+	public boolean possuiVotosPendentes() {
+		return this.quantidadeVotosPendentes == null || quantidadeVotosPendentes > 0;
+	}
+	
+	public boolean votosNaoContabilizados() {
+		return this.quantidadeVotosNao == null && this.quantidadeVotosSim == null;
+	}
+	
+	public boolean sessaoEncerrada() {
+		return this.dataFimVotacao != null && this.dataFimVotacao.isBefore(LocalDateTime.now());
+	}
+	
+	public boolean podeContabilizarVotosDaSessao() {
+		return sessaoEncerrada() && !possuiVotosPendentes() && votosNaoContabilizados();
+	}
+	
+	public boolean aprovada() {
+		return !votosNaoContabilizados() && this.quantidadeVotosSim > this.quantidadeVotosNao;
+	}
 
 }

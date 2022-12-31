@@ -28,6 +28,7 @@ public @Data class PautaDto {
 	private Long quantidadeVotosNao;
 	private Boolean encerrada;
 	private Boolean aprovada;
+	private Boolean votacaoContabilizada;
 
 	public PautaDto(Pauta pauta) {
 		this.id = pauta.getId();
@@ -37,8 +38,9 @@ public @Data class PautaDto {
 		this.dataFimVotacao = pauta.getDataFimVotacao();
 		this.quantidadeVotosSim = pauta.getQuantidadeVotosSim();
 		this.quantidadeVotosNao = pauta.getQuantidadeVotosNao();
-		this.encerrada = dataFimVotacao != null ? this.dataFimVotacao.isBefore(LocalDateTime.now()) : false;
-		this.aprovada =  this.quantidadeVotosSim != null && this.quantidadeVotosNao != null && this.quantidadeVotosSim > this.quantidadeVotosNao;
+		this.encerrada = pauta.sessaoEncerrada();
+		this.aprovada = pauta.aprovada();
+		this.votacaoContabilizada = !pauta.votosNaoContabilizados();
 	}
 	
 	public static Page<PautaDto> converterParaDto(Page<Pauta> pautas) {
