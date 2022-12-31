@@ -6,6 +6,7 @@ services:
           - 8080:8080
       depends_on:
           - db
+          - rabbitmq
     db:
         container_name: postgres_db
         image: postgres:9.5
@@ -36,3 +37,4 @@ services:
 
 volumes:
     postgres_db: {}
+    rabbitmq: {}

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cooperativa.controller.AssembleiaController;
+import br.com.cooperativa.exception.UnprocessableEntityException;
 import br.com.cooperativa.model.dto.AssembleiaDto;
 import br.com.cooperativa.model.entity.Assembleia;
 import br.com.cooperativa.model.form.AssembleiaForm;
