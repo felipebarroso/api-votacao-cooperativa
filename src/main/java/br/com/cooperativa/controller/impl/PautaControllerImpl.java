@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cooperativa.controller.PautaController;
 import br.com.cooperativa.exception.NotFoundException;
+import br.com.cooperativa.model.dto.InicioPautaRequestDto;
 import br.com.cooperativa.model.dto.PautaDto;
+import br.com.cooperativa.model.dto.PautaRequestDto;
 import br.com.cooperativa.model.entity.Assembleia;
 import br.com.cooperativa.model.entity.Pauta;
-import br.com.cooperativa.model.form.InicioPautaForm;
-import br.com.cooperativa.model.form.PautaForm;
 import br.com.cooperativa.repository.AssembleiaRepository;
 import br.com.cooperativa.repository.PautaRepository;
 import br.com.cooperativa.service.PautaService;
@@ -59,11 +59,11 @@ public class PautaControllerImpl implements PautaController {
 	}
 	
 	@PostMapping("/v1.0")
-	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaForm pautaForm) {
+	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaRequestDto pautaForm) {
 		Optional<Assembleia> assembleia = assembleiaRepository.findById(pautaForm.getAssembleiaId());
 		
 		if(!assembleia.isPresent())
-			throw new NotFoundException("Assembleia informada n√£o encontada");
+			throw new NotFoundException("Assembleia informada n„o encontada");
 		
 		Pauta pauta = pautaForm.converterDtoParaPauta(assembleia.get());
 		pautaRepository.save(pauta);
@@ -72,7 +72,7 @@ public class PautaControllerImpl implements PautaController {
 	}
 	
 	@PutMapping("/v1.0/inicia")
-	public ResponseEntity<PautaDto> iniciarSessao(@RequestBody @Valid InicioPautaForm inicioPautaForm) {
+	public ResponseEntity<PautaDto> iniciarSessao(@RequestBody @Valid InicioPautaRequestDto inicioPautaForm) {
 		final Pauta pauta = pautaService.iniciarSessaoVotacaoPauta(inicioPautaForm);
 		final PautaDto pautaDto = new PautaDto(pauta);
 		return ResponseEntity.ok(pautaDto);

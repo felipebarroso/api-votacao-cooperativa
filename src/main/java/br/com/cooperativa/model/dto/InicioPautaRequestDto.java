@@ -1,4 +1,4 @@
-package br.com.cooperativa.model.form;
+package br.com.cooperativa.model.dto;
 
 import javax.validation.constraints.NotNull;
 
@@ -14,11 +14,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public @Data class InicioPautaForm {
+public @Data class InicioPautaRequestDto {
 
-	@NotNull(message = "Pauta n√£o informada")
+	@NotNull(message = "Pauta n„o informada")
 	private Long pautaId;
 	
-	private Long duracaoSessaoEmMinutos;
+	private Integer duracaoSessaoEmMinutos;
 
 }

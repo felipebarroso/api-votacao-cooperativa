@@ -1,4 +1,4 @@
-package br.com.cooperativa.model.form;
+package br.com.cooperativa.model.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -18,10 +18,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public @Data class PautaForm {
+public @Data class PautaRequestDto {
 
-	@NotBlank(message = "A pauta deve possuir uma descri√ß√£o")
-	@Size(max=200, message = "A descri√ß√£o da pauta pode conter no m√°ximo 200 caracteres")
+	@NotBlank(message = "A pauta deve possuir uma descriÁ„o")
+	@Size(max=200, message = "A descriÁ„o da pauta pode conter no m·ximo 200 caracteres")
 	private String descricao;
 	
 	@NotNull(message = "A pauta deve pertencer a uma assembleia")

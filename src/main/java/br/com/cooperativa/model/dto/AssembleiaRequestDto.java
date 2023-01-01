@@ -1,4 +1,4 @@
-package br.com.cooperativa.model.form;
+package br.com.cooperativa.model.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,10 +16,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public @Data class AssembleiaForm {
+public @Data class AssembleiaRequestDto {
 
-	@NotBlank(message = "A assembleia deve possuir uma descri√ß√£o")
-	@Size(max=200, message = "A descri√ß√£o da assembleia pode conter no m√°ximo 200 caracteres")
+	@NotBlank(message = "A assembleia deve possuir uma descriÁ„o")
+	@Size(max=200, message = "A descriÁ„o da assembleia pode conter no m·ximo 200 caracteres")
 	private String descricao;
 
 	public Assembleia converterDtoParaAssembleia() {

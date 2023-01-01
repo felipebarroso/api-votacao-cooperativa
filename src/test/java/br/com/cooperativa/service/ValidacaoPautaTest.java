@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import br.com.cooperativa.exception.UnprocessableEntityException;
-import br.com.cooperativa.model.dto.QuantidadeVotosDto;
 import br.com.cooperativa.model.entity.Assembleia;
 import br.com.cooperativa.model.entity.Pauta;
 import br.com.cooperativa.repository.PautaRepository;
@@ -29,12 +28,13 @@ public class ValidacaoPautaTest {
 	
 	private PautaService pautaService;
 	
-	private final Long ID = 1L;
+	private static final Long ID = 1L;
+	private static final Integer DURACAO_SESSAO_PADRAO_EM_MINUTOS = 1;
 	
 	
 	@BeforeEach
 	public void beforeEach() {
-		this.pautaService = new PautaService(ID, pautaRepository, votoRepository);
+		this.pautaService = new PautaService(DURACAO_SESSAO_PADRAO_EM_MINUTOS, pautaRepository, votoRepository);
 	}
 	
 	private Pauta construirPauta(LocalDateTime dataInicio, LocalDateTime dataFim) {

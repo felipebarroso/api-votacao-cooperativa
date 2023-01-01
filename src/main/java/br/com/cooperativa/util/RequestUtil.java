@@ -37,15 +37,15 @@ public class RequestUtil {
 				return Optional.empty();
 			}
 		} catch (HttpClientErrorException ex) {
-			log.error("Erro em requisiÃ§Ã£o Ã  URL " + baseUrl, ex);
+			log.error("Erro de requisição na URL " + baseUrl, ex);
 			HttpStatus status = ex.getStatusCode();
 		    if (status == HttpStatus.NOT_FOUND)
 		    	return Optional.empty();
 		} catch (URISyntaxException ex) {
-			log.error("Erro em requisiÃ§Ã£o Ã  URL " + baseUrl, ex);
-			throw new IntegracaoException("Erro em requisiÃ§Ã£o");
+			log.error("Erro de requisição na URL " + baseUrl, ex);
+			throw new IntegracaoException("Erro em requisição");
 		}
-		throw new GenericException("Erro em requisiÃ§Ã£o");
+		throw new GenericException("Erro em requisição");
 	}
 
 }

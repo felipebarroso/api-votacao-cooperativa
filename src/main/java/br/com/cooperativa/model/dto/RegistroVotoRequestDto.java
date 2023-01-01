@@ -1,4 +1,4 @@
-package br.com.cooperativa.model.form;
+package br.com.cooperativa.model.dto;
 
 import java.time.LocalDateTime;
 
@@ -19,16 +19,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public @Data class RegistroVotoForm {
+public @Data class RegistroVotoRequestDto {
 
-	@NotNull(message = "Pauta n√£o informada")
+	@NotNull(message = "Pauta n„o informada")
 	private Long pautaId;
 	
-	@NotBlank(message = "CPF do associado n√£o informado")
-	@Size(min = 11, max=11, message = "O CPF deve conter 11 d√≠gitos")
+	@NotBlank(message = "CPF do associado n„o informado")
+	@Size(min = 11, max=11, message = "O CPF deve conter 11 dÌgitos")
 	private String cpfAssociado;
 	
-	@NotNull(message = "Voto n√£o informado")
+	@NotNull(message = "Voto n„o informado")
 	private Boolean concordaComPauta;
 	
 	public Voto converterDtoParaVoto() {

@@ -5,18 +5,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import br.com.cooperativa.exception.NotFoundException;
 import br.com.cooperativa.exception.UnprocessableEntityException;
+import br.com.cooperativa.model.dto.InicioPautaRequestDto;
 import br.com.cooperativa.model.dto.PautaDto;
 import br.com.cooperativa.model.dto.QuantidadeVotosDto;
 import br.com.cooperativa.model.entity.Pauta;
-import br.com.cooperativa.model.form.InicioPautaForm;
 import br.com.cooperativa.repository.PautaRepository;
 import br.com.cooperativa.repository.VotoRepository;
 import lombok.AllArgsConstructor;
@@ -30,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PautaService {
 	
 	@Value("${pauta.sessao.duracao.minutos}")
-	private Long duracaoSessaoPadraoEmMinutos;
+	private Integer duracaoSessaoPadraoEmMinutos;
 	
 	@Autowired
 	private PautaRepository pautaRepository;
@@ -39,22 +37,22 @@ public class PautaService {
 	private VotoRepository votoRepository;
 	
 	
-	public Pauta iniciarSessaoVotacaoPauta(@Valid InicioPautaForm inicioPautaForm) {
+	public Pauta iniciarSessaoVotacaoPauta(final InicioPautaRequestDto inicioPautaForm) {
 		log.info("iniciarSessaoVotacaoPauta");
 		return pesquisarPautaPorId(inicioPautaForm.getPautaId())
 			.map(pauta -> validarSeSessaoPodeSerIniciada(pauta))
-			.map(pauta -> preencherDadosParaIniciarSessao(pauta, inicioPautaForm))
+			.map(pauta -> preencherDadosDaPautaParaIniciarSessao(pauta, inicioPautaForm))
 			.map(pauta -> pautaRepository.save(pauta))
-			.orElseThrow(() -> new NotFoundException("Pauta nÃ£o encontrada"));
+			.orElseThrow(() -> new NotFoundException("Pauta não encontrada"));
 	}
 	
-	public Optional<Pauta> pesquisarPautaPorId(Long id) {
+	public Optional<Pauta> pesquisarPautaPorId(final Long id) {
 		log.info("pesquisarPautaPorId");
 		return pautaRepository.findById(id)
 				.map(pauta -> contabilizarVotosDaSessaoSeProcessoFinalizado(pauta));
 	}
 	
-	public Pauta validarSeSessaoPodeSerIniciada(Pauta pauta) {
+	public Pauta validarSeSessaoPodeSerIniciada(final Pauta pauta) {
 		validarSeSessaoEncerrada(pauta);
 		validarSeSessaoIniciada(pauta);
 		return pauta;
@@ -63,41 +61,37 @@ public class PautaService {
 	// TODO
 	// mover validacoes de sessao para dentro da Pauta
 	
-	public Pauta validarSeSessaoPodeSerVotada(Pauta pauta) {
+	public Pauta validarSeSessaoPodeSerVotada(final Pauta pauta) {
 		validarSeSessaoNaoIniciada(pauta);
 		validarSeSessaoEncerrada(pauta);
 		return pauta;
 	}
 	
-	public void validarSeSessaoNaoIniciada(Pauta pauta) {
+	public void validarSeSessaoNaoIniciada(final Pauta pauta) {
 		log.info("validarSeSessaoNaoIniciada");
-		if(pauta.getDataInicioVotacao() == null || pauta.getDataInicioVotacao().isAfter(LocalDateTime.now()))
-			throw new UnprocessableEntityException("A sessÃ£o de votaÃ§Ã£o da pauta ainda nÃ£o estÃ¡ iniciada");
+		if(!pauta.sessaoInicada())
+			throw new UnprocessableEntityException("A sessão de votação da pauta ainda não está iniciada");
 	}
 	
-	public void validarSeSessaoIniciada(Pauta pauta) {
+	public void validarSeSessaoIniciada(final Pauta pauta) {
 		log.info("validarSeSessaoIniciada");
-		if(pauta.getDataInicioVotacao() != null)
-			throw new UnprocessableEntityException("A sessÃ£o de votaÃ§Ã£o da pauta jÃ¡ estÃ¡ iniciada");
+		if(pauta.sessaoInicada())
+			throw new UnprocessableEntityException("A sessão de votação da pauta já está iniciada");
 	}
 	
-	public void validarSeSessaoEncerrada(Pauta pauta) {
+	public void validarSeSessaoEncerrada(final Pauta pauta) {
 		log.info("validarSeSessaoEncerrada");
 		if(pauta.sessaoEncerrada())
-			throw new UnprocessableEntityException("A sessÃ£o de votaÃ§Ã£o da pauta jÃ¡ estÃ¡ encerrada");
+			throw new UnprocessableEntityException("A sessão de votação da pauta já está encerrada");
 	}
 	
-	private Pauta preencherDadosParaIniciarSessao(Pauta pauta, InicioPautaForm inicioPautaForm) {
+	private Pauta preencherDadosDaPautaParaIniciarSessao(Pauta pauta, final InicioPautaRequestDto inicioPautaRequestDto) {
 		log.info("preencherDadosParaIniciarSessao");
-		final Long duracaoSessaoPauta = inicioPautaForm.getDuracaoSessaoEmMinutos() != null 
-				&& inicioPautaForm.getDuracaoSessaoEmMinutos() > 0L ? inicioPautaForm.getDuracaoSessaoEmMinutos() : this.duracaoSessaoPadraoEmMinutos;
 		pauta.setDataInicioVotacao(LocalDateTime.now());
-		pauta.setDataFimVotacao(LocalDateTime.now().plusMinutes(duracaoSessaoPauta));
+		pauta.setDataFimVotacao(inicioPautaRequestDto.getDuracaoSessaoEmMinutos(), this.duracaoSessaoPadraoEmMinutos);
 		return pauta;
 	}
 	
-	// TODO
-	// metodo deveria estar na classe de votos
 	public Pauta contabilizarVotosDaSessaoSeProcessoFinalizado(Pauta pauta) {
 		log.info("contabilizarVotosDaSessaoSeProcessoFinalizado");
 		if(pauta.podeContabilizarVotosDaSessao()) {
@@ -113,20 +107,9 @@ public class PautaService {
 		}
 	}
 	
-	// TODO
-	// metodo deveria estar na classe de votos
-	private Pauta verificarSeVotosPendentesDeValidacao(Pauta pauta) {
-		log.info("verificarSeVotosPendentesDeValidacao");
-		Integer quantidadeVotosPendentes = votoRepository.pesquisarQuantidadeDeVotosPendentesDeValidacao(pauta.getId(), 
-				pauta.getDataInicioVotacao(), pauta.getDataFimVotacao());
-		pauta.setQuantidadeVotosPendentes(quantidadeVotosPendentes);
-		return pauta;
-	}
-
 	public List<PautaDto> pesquisarPautasEncerradasParaContabilizarVotos() {
 		List<Pauta> pautasParaEncerramento = pautaRepository.pesquisarPautasFinalizadasParaEncerramento(LocalDateTime.now());
 		return pautasParaEncerramento.stream()
-				.map(pauta -> verificarSeVotosPendentesDeValidacao(pauta))
 				.map(pauta -> contabilizarVotosDaSessaoSeProcessoFinalizado(pauta))
 				.map(pauta -> new PautaDto(pauta))
 				.collect(Collectors.toList());

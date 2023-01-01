@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cooperativa.controller.AssembleiaController;
-import br.com.cooperativa.exception.UnprocessableEntityException;
 import br.com.cooperativa.model.dto.AssembleiaDto;
+import br.com.cooperativa.model.dto.AssembleiaRequestDto;
 import br.com.cooperativa.model.entity.Assembleia;
-import br.com.cooperativa.model.form.AssembleiaForm;
 import br.com.cooperativa.repository.AssembleiaRepository;
 
 @RestController
@@ -45,7 +44,7 @@ public class AssembleiaControllerImpl implements AssembleiaController {
 	}
 	
 	@PostMapping("/v1.0")
-	public ResponseEntity<AssembleiaDto> cadastrar(@RequestBody @Valid AssembleiaForm assembleiaForm) {
+	public ResponseEntity<AssembleiaDto> cadastrar(@RequestBody @Valid AssembleiaRequestDto assembleiaForm) {
 		Assembleia assembleia = assembleiaForm.converterDtoParaAssembleia();
 		assembleiaRepository.save(assembleia);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new AssembleiaDto(assembleia));

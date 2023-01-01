@@ -13,9 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
 import br.com.cooperativa.controller.impl.VotoControllerImpl;
+import br.com.cooperativa.model.dto.RegistroVotoRequestDto;
 import br.com.cooperativa.model.entity.Assembleia;
 import br.com.cooperativa.model.entity.Pauta;
-import br.com.cooperativa.model.form.RegistroVotoForm;
 import br.com.cooperativa.service.PautaService;
 import br.com.cooperativa.service.VotoService;
 import io.restassured.http.ContentType;
@@ -54,7 +54,7 @@ public class VotoControllerTest {
 	
 	@Test
 	public void deveVotarPauta() {
-		final RegistroVotoForm votoForm = RegistroVotoForm.builder()
+		final RegistroVotoRequestDto votoForm = RegistroVotoRequestDto.builder()
 				.concordaComPauta(true)
 				.cpfAssociado("00000000000")
 				.pautaId(ID)

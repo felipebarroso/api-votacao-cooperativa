@@ -13,10 +13,10 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
+import br.com.cooperativa.model.dto.RegistroVotoRequestDto;
 import br.com.cooperativa.model.dto.RespostaRequisicaoCpfDto;
 import br.com.cooperativa.model.entity.Assembleia;
 import br.com.cooperativa.model.entity.Pauta;
-import br.com.cooperativa.model.form.RegistroVotoForm;
 import br.com.cooperativa.repository.PautaRepository;
 import br.com.cooperativa.service.CpfService;
 import io.restassured.RestAssured;
@@ -50,7 +50,7 @@ public class VotarTest {
 	
 	@Test
 	public void deveVotarPauta() {
-		final RegistroVotoForm votoForm = RegistroVotoForm.builder()
+		final RegistroVotoRequestDto votoForm = RegistroVotoRequestDto.builder()
 				.concordaComPauta(true)
 				.cpfAssociado("00000000000")
 				.pautaId(ID)

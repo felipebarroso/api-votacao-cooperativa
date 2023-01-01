@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import br.com.cooperativa.exception.GenericException;
+import br.com.cooperativa.model.dto.RegistroVotoRequestDto;
 import br.com.cooperativa.model.dto.RespostaRequisicaoCpfDto;
-import br.com.cooperativa.model.form.RegistroVotoForm;
 import br.com.cooperativa.util.JsonUtil;
 import br.com.cooperativa.util.RequestUtil;
 import lombok.AllArgsConstructor;
@@ -20,15 +20,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CpfService {
 	
-	@Value("${uri.valida.cpf}")
-	private String uriValidacaoCpf;
+	@Value("${url.valida.cpf}")
+	private String urlValidacaoCpf;
 	
-	
-	public Optional<RespostaRequisicaoCpfDto> validarCpfAssociado(RegistroVotoForm votoForm) {
+	// TODO
+	// refatorar requisicao e tratamento de erro
+	public Optional<RespostaRequisicaoCpfDto> validarCpfAssociado(final RegistroVotoRequestDto votoForm) {
 		log.info("validarCpfAssociado");
-		String endpoint = uriValidacaoCpf.replace("CPF", votoForm.getCpfAssociado());
+		String endpoint = this.urlValidacaoCpf.replace("CPF", votoForm.getCpfAssociado());
 		
-        Optional<RespostaRequisicaoCpfDto> respostaRequisicaoCpfDto = Optional.of(endpoint).flatMap(url -> {
+		final Optional<RespostaRequisicaoCpfDto> respostaRequisicaoCpfDto = Optional.of(endpoint).flatMap(url -> {
                     try {
                         return RequestUtil.makeRequest(url, null);
                     } catch (GenericException err) {

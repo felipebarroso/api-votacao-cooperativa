@@ -47,26 +47,26 @@ public class GenericResponseExceptionHandler extends ResponseEntityExceptionHand
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		return new ResponseEntity<>(preencherResponseBody(status, "Requisi√ß√£o inv√°lida"), headers, status);
+		return new ResponseEntity<>(preencherResponseBody(status, "RequisiÁ„o inv·lida"), headers, status);
 	}
 	
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<?> handleException(HttpServletRequest req, Exception exception) throws Exception {
 		if(exception instanceof ServletRequestBindingException) {
-			log.error("Requisi√ß√£o inv√°lida", exception);
-			GenericException err = new GenericException("Requisi√ß√£o inv√°lida");
-			log.info("Retornando exce√ß√£o gen√©rica", err);
+			log.error("RequisiÁ„o inv·lida", exception);
+			GenericException err = new GenericException("RequisiÁ„o inv·lida");
+			log.info("Retornando exceÁ„o genÈrica", err);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 		}
 		
 		if(!exception.getClass().getPackage().getName().startsWith(VotacaoCooperativaApplication.class.getPackage().getName())) {
-			log.error("Erro n√£o tratado", exception);
+			log.error("Erro n„o tratado", exception);
 			GenericException err = new GenericException("Erro inesperado");
-			log.info("Retornando exce√ß√£o gen√©rica", err);
+			log.info("Retornando exceÁ„o genÈrica", err);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
 		}
 		
-		log.error("Erro no servi√ßo", exception);
+		log.error("Erro no serviÁo", exception);
 		exception.setStackTrace(new StackTraceElement[]{});
 		HttpStatus errorStatus = exception.getClass().getAnnotation(ResponseStatus.class).value();
 		return ResponseEntity.status(errorStatus).body(preencherResponseBody(errorStatus, exception.getMessage()));
