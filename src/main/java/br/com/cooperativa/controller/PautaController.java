@@ -47,7 +47,7 @@ public interface PautaController {
 	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
 	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
-	ResponseEntity<PautaDto> cadastrar(PautaRequestDto pautaForm);
+	ResponseEntity<PautaDto> cadastrar(PautaRequestDto pautaRequestDto);
 	
 	@ApiOperation(value = "Iniciar sessão de votação da pauta")
 	@ApiResponses(value = {
@@ -58,7 +58,7 @@ public interface PautaController {
 	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
 	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
-	ResponseEntity<PautaDto> iniciarSessao(InicioPautaRequestDto inicioPautaForm);
+	ResponseEntity<PautaDto> iniciarSessao(InicioPautaRequestDto inicioPautaRequestDto);
 	
 	@ApiOperation(value = "Contabilizar votos das pautas encerradas")
 	@ApiResponses(value = {

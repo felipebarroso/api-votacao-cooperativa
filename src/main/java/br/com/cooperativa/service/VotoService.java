@@ -3,7 +3,6 @@ package br.com.cooperativa.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import br.com.cooperativa.exception.UnprocessableEntityException;
@@ -29,30 +28,30 @@ public class VotoService {
 	private CpfService cpfService;
 	
 	
-	public void registrarVotoDoAssociadoNaPauta(final Pauta pauta, final RegistroVotoRequestDto votoForm) {
-		validarSeAssociadoJaVotou(pauta, votoForm);
-		validarSeAssociadoHatilitado(votoForm);
-		registrarVotoNaPauta(votoForm);
+	public void registrarVotoDoAssociadoNaPauta(final Pauta pauta, final RegistroVotoRequestDto registroVotoRequestDto) {
+		validarSeAssociadoJaVotou(pauta, registroVotoRequestDto);
+		validarSeAssociadoHatilitado(registroVotoRequestDto);
+		registrarVotoNaPauta(registroVotoRequestDto);
 	}
 	
-	public void validarSeAssociadoHatilitado(final RegistroVotoRequestDto votoForm) {
+	public void validarSeAssociadoHatilitado(final RegistroVotoRequestDto registroVotoRequestDto) {
 		log.info("validarSeAssociadoHatilitado");
-		final Optional<RespostaRequisicaoCpfDto> respostaRequisicaoCpfDto = cpfService.validarCpfAssociado(votoForm);
+		final Optional<RespostaRequisicaoCpfDto> respostaRequisicaoCpfDto = cpfService.validarCpfAssociado(registroVotoRequestDto);
         if(!respostaRequisicaoCpfDto.isPresent() || respostaRequisicaoCpfDto.isEmpty() || respostaRequisicaoCpfDto.get().getStatus().equals("UNABLE_TO_VOTE"))
-        	throw new UnprocessableEntityException("Associado n√£o est√° habilitado para votar ou CPF √© inv√°lido");
+        	throw new UnprocessableEntityException("Associado n„o est· habilitado para votar ou CPF È inv·lido");
 	}
 	
-	public void validarSeAssociadoJaVotou(final Pauta pauta, final RegistroVotoRequestDto votoForm) {
+	public void validarSeAssociadoJaVotou(final Pauta pauta, final RegistroVotoRequestDto registroVotoRequestDto) {
 		log.info("validarSeAssociadoJaVotou");
 		final Optional<Voto> votoOp = votoRepository.pesquisarVotoPorAssociadoEPauta(pauta.getId(), pauta.getDataInicioVotacao(), 
-				pauta.getDataFimVotacao(), votoForm.getCpfAssociado());
+				pauta.getDataFimVotacao(), registroVotoRequestDto.getCpfAssociado());
 		if(votoOp.isPresent())
 			throw new UnprocessableEntityException("Associado ja votou nesta pauta");
 	}
 	
-	public void registrarVotoNaPauta(final RegistroVotoRequestDto votoForm) {
+	public void registrarVotoNaPauta(final RegistroVotoRequestDto registroVotoRequestDto) {
 		log.info("registrarVotoNaoValidadoNaPauta");
-		final Voto voto = votoForm.converterDtoParaVoto();
+		final Voto voto = registroVotoRequestDto.converterDtoParaVoto();
 		votoRepository.save(voto);
 	}
 	

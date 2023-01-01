@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.cooperativa.exception.NotFoundException;
 import br.com.cooperativa.exception.UnprocessableEntityException;
+import br.com.cooperativa.exception.pauta.PautaSessaoEncerradaException;
 import br.com.cooperativa.model.dto.InicioPautaRequestDto;
 import br.com.cooperativa.model.dto.PautaDto;
 import br.com.cooperativa.model.dto.QuantidadeVotosDto;
@@ -37,11 +38,11 @@ public class PautaService {
 	private VotoRepository votoRepository;
 	
 	
-	public Pauta iniciarSessaoVotacaoPauta(final InicioPautaRequestDto inicioPautaForm) {
+	public Pauta iniciarSessaoVotacaoPauta(final InicioPautaRequestDto inicioPautaRequestDto) {
 		log.info("iniciarSessaoVotacaoPauta");
-		return pesquisarPautaPorId(inicioPautaForm.getPautaId())
+		return pesquisarPautaPorId(inicioPautaRequestDto.getPautaId())
 			.map(pauta -> validarSeSessaoPodeSerIniciada(pauta))
-			.map(pauta -> preencherDadosDaPautaParaIniciarSessao(pauta, inicioPautaForm))
+			.map(pauta -> preencherDadosDaPautaParaIniciarSessao(pauta, inicioPautaRequestDto))
 			.map(pauta -> pautaRepository.save(pauta))
 			.orElseThrow(() -> new NotFoundException("Pauta não encontrada"));
 	}
@@ -82,7 +83,7 @@ public class PautaService {
 	public void validarSeSessaoEncerrada(final Pauta pauta) {
 		log.info("validarSeSessaoEncerrada");
 		if(pauta.sessaoEncerrada())
-			throw new UnprocessableEntityException("A sessão de votação da pauta já está encerrada");
+			throw new PautaSessaoEncerradaException();
 	}
 	
 	private Pauta preencherDadosDaPautaParaIniciarSessao(Pauta pauta, final InicioPautaRequestDto inicioPautaRequestDto) {

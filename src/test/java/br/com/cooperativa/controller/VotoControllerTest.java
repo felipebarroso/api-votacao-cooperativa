@@ -54,19 +54,19 @@ public class VotoControllerTest {
 	
 	@Test
 	public void deveVotarPauta() {
-		final RegistroVotoRequestDto votoForm = RegistroVotoRequestDto.builder()
+		final RegistroVotoRequestDto registroVotoRequestDto = RegistroVotoRequestDto.builder()
 				.concordaComPauta(true)
 				.cpfAssociado("00000000000")
 				.pautaId(ID)
 				.build();
 		final Optional<Pauta> pautaOp = Optional.of(construirPauta(LocalDateTime.now(), LocalDateTime.now().plusMinutes(5)));
 		
-		Mockito.when(this.pautaService.pesquisarPautaPorId(votoForm.getPautaId())).thenReturn(pautaOp);
+		Mockito.when(this.pautaService.pesquisarPautaPorId(registroVotoRequestDto.getPautaId())).thenReturn(pautaOp);
 		Mockito.when(this.pautaService.validarSeSessaoPodeSerVotada(pautaOp.get())).thenReturn(pautaOp.get());
 		
 		RestAssuredMockMvc
 			.given()
-				.body(votoForm)
+				.body(registroVotoRequestDto)
 				.contentType(ContentType.JSON)
 			.when()
 				.post("/votos/v1.0")

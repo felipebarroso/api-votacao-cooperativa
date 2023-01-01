@@ -20,6 +20,6 @@ public interface VotoController {
 	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
 	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
-	ResponseEntity<String> votar(RegistroVotoRequestDto votoForm);
+	ResponseEntity<String> votar(RegistroVotoRequestDto registroVotoRequestDto);
 	
 }

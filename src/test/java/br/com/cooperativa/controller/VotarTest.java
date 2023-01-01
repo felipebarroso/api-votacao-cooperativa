@@ -50,7 +50,7 @@ public class VotarTest {
 	
 	@Test
 	public void deveVotarPauta() {
-		final RegistroVotoRequestDto votoForm = RegistroVotoRequestDto.builder()
+		final RegistroVotoRequestDto registroVotoRequestDto = RegistroVotoRequestDto.builder()
 				.concordaComPauta(true)
 				.cpfAssociado("00000000000")
 				.pautaId(ID)
@@ -59,12 +59,12 @@ public class VotarTest {
 		final Optional<Pauta> pautaOp = Optional.of(construirPauta(LocalDateTime.now(), LocalDateTime.now().plusMinutes(5)));
 		
 		Mockito.when(this.pautaRepository.findById(ID)).thenReturn(pautaOp);
-		Mockito.when(this.cpfService.validarCpfAssociado(votoForm)).thenReturn(Optional.of(respostaRequisicaoCpfDto));
+		Mockito.when(this.cpfService.validarCpfAssociado(registroVotoRequestDto)).thenReturn(Optional.of(respostaRequisicaoCpfDto));
 		
 		RestAssured
 			.given()
 				.port(this.port)
-				.body(votoForm)
+				.body(registroVotoRequestDto)
 				.contentType(ContentType.JSON)
 			.when()
 				.post("/votos/v1.0")

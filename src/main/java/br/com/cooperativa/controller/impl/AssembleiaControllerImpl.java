@@ -44,8 +44,8 @@ public class AssembleiaControllerImpl implements AssembleiaController {
 	}
 	
 	@PostMapping("/v1.0")
-	public ResponseEntity<AssembleiaDto> cadastrar(@RequestBody @Valid AssembleiaRequestDto assembleiaForm) {
-		Assembleia assembleia = assembleiaForm.converterDtoParaAssembleia();
+	public ResponseEntity<AssembleiaDto> cadastrar(@RequestBody @Valid AssembleiaRequestDto assembleiaRequestDto) {
+		Assembleia assembleia = assembleiaRequestDto.converterDtoParaAssembleia();
 		assembleiaRepository.save(assembleia);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new AssembleiaDto(assembleia));
 	}

@@ -59,21 +59,21 @@ public class PautaControllerImpl implements PautaController {
 	}
 	
 	@PostMapping("/v1.0")
-	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaRequestDto pautaForm) {
-		Optional<Assembleia> assembleia = assembleiaRepository.findById(pautaForm.getAssembleiaId());
+	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaRequestDto pautaRequestDto) {
+		Optional<Assembleia> assembleia = assembleiaRepository.findById(pautaRequestDto.getAssembleiaId());
 		
 		if(!assembleia.isPresent())
 			throw new NotFoundException("Assembleia informada não encontada");
 		
-		Pauta pauta = pautaForm.converterDtoParaPauta(assembleia.get());
+		Pauta pauta = pautaRequestDto.converterDtoParaPauta(assembleia.get());
 		pautaRepository.save(pauta);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(new PautaDto(pauta));
 	}
 	
 	@PutMapping("/v1.0/inicia")
-	public ResponseEntity<PautaDto> iniciarSessao(@RequestBody @Valid InicioPautaRequestDto inicioPautaForm) {
-		final Pauta pauta = pautaService.iniciarSessaoVotacaoPauta(inicioPautaForm);
+	public ResponseEntity<PautaDto> iniciarSessao(@RequestBody @Valid InicioPautaRequestDto inicioPautaRequestDto) {
+		final Pauta pauta = pautaService.iniciarSessaoVotacaoPauta(inicioPautaRequestDto);
 		final PautaDto pautaDto = new PautaDto(pauta);
 		return ResponseEntity.ok(pautaDto);
 	}

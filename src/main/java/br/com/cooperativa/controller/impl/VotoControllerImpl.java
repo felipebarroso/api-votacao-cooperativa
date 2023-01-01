@@ -33,16 +33,16 @@ public class VotoControllerImpl implements VotoController {
 	
 	
 	@PostMapping("/v1.0")
-	public ResponseEntity<String> votar(@RequestBody @Valid RegistroVotoRequestDto votoForm) {
+	public ResponseEntity<String> votar(@RequestBody @Valid RegistroVotoRequestDto registroVotoRequestDto) {
 		log.info("votar");
-		Optional<Pauta> pautaOp = pautaService.pesquisarPautaPorId(votoForm.getPautaId());
+		Optional<Pauta> pautaOp = pautaService.pesquisarPautaPorId(registroVotoRequestDto.getPautaId());
 		
 		if(!pautaOp.isPresent())
 			throw new NotFoundException("Pauta informada não encontada");
 		
 		final Pauta pauta = pautaOp.get();
 		pautaService.validarSeSessaoPodeSerVotada(pauta);
-		votoService.registrarVotoDoAssociadoNaPauta(pauta, votoForm);
+		votoService.registrarVotoDoAssociadoNaPauta(pauta, registroVotoRequestDto);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body("Seu voto foi registrado com sucesso.");
 	}

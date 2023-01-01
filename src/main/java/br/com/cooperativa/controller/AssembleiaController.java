@@ -44,6 +44,6 @@ public interface AssembleiaController {
 	        @ApiResponse(code = 404, message = "Recurso não encontrado"),
 	        @ApiResponse(code = 422, message = "Erro de validação")
 	})
-	ResponseEntity<AssembleiaDto> cadastrar(AssembleiaRequestDto assembleiaForm);
+	ResponseEntity<AssembleiaDto> cadastrar(AssembleiaRequestDto assembleiaRequestDto);
 
 }

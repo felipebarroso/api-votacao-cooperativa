@@ -25,9 +25,9 @@ public class CpfService {
 	
 	// TODO
 	// refatorar requisicao e tratamento de erro
-	public Optional<RespostaRequisicaoCpfDto> validarCpfAssociado(final RegistroVotoRequestDto votoForm) {
+	public Optional<RespostaRequisicaoCpfDto> validarCpfAssociado(final RegistroVotoRequestDto registroVotoRequestDto) {
 		log.info("validarCpfAssociado");
-		String endpoint = this.urlValidacaoCpf.replace("CPF", votoForm.getCpfAssociado());
+		String endpoint = this.urlValidacaoCpf.replace("CPF", registroVotoRequestDto.getCpfAssociado());
 		
 		final Optional<RespostaRequisicaoCpfDto> respostaRequisicaoCpfDto = Optional.of(endpoint).flatMap(url -> {
                     try {
