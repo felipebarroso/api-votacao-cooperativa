@@ -68,4 +68,4 @@ Primeiro o voto é recebido, realiza as validações necessárias e produz uma m
 
 ![ProcessarVoto](https://user-images.githubusercontent.com/42699918/210193021-b47fd7df-c6e5-4bc0-ac35-72f36b9013e6.jpg)
 
-
+Neste cenário o processo de contabilizar os votos e dar o resultado da pauta seria executado em um job externo a API com agendamento para a data/hora igual ao encerramento da sessão da pauta. Esse agendamento seria criado no momento de inicialização da sessão da pauta.
