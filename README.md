@@ -29,6 +29,7 @@ Outra forma é sem container:
 * Executar o comando "mvn spring-boot:run" na pasta raiz da aplicação.
 * Após inicialização acessar a url http://localhost:8080/swagger-ui.html#
 
+
 ## Modelo de dados ##
 
 ![Entityrelationshipdiagram1](https://user-images.githubusercontent.com/42699918/111929313-c59b1500-8a94-11eb-9f2b-a99ec3e73e7f.png)
@@ -36,13 +37,17 @@ Outra forma é sem container:
 
 ## ARQUITETURA IMPLEMENTADA ##
 
-
 ![Diagrama- Arquitetura-Votacao-Cooperativa-Local](https://user-images.githubusercontent.com/42699918/210192286-a6071542-f7a4-4fc5-8996-2ce6f59c5c09.jpg)
 
 Nesta arquitetura o processo de registrar um voto está síncrono, realizando a verificação do CPF em API externa e gravando no banco antes de responder a requisição do voto, como ilustrado no diagrama abaixo. Esta implementação não considerou um cenário de grande fluxo de requisições.
 
+Implantação local:
+
 ![ReceverVotoSincrono](https://user-images.githubusercontent.com/42699918/210193135-ef298267-73b6-4732-aa87-01d723f0cfd8.jpg)
 
+Implantação em nuvem (utilizada aws como exemplo):
+
+![Diagrama- Arquitetura-Votacao-Cooperativa-AWS](https://user-images.githubusercontent.com/42699918/210231311-61acc2b1-fe0e-4dd2-b195-8e5cceca52b3.jpg)
 
 
 ## ARQUITETURA SUGERIDA ##
