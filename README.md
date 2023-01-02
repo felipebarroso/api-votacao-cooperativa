@@ -4,6 +4,7 @@ Este projeto tem o objetivo de registrar e contabilizar os votos dos associados 
 
 ## Configurações do Projeto ##
 
+* Aplicação com Spring-Boot 2 e Java 11.
 * Utiliza lombok, necessário instalar na IDE (utilizado Spring Tool Suite 4).
 * Start configurado para porta 8080.
 * Swagger pode ser acessado em http://localhost:8080/swagger-ui.html#
@@ -11,6 +12,8 @@ Este projeto tem o objetivo de registrar e contabilizar os votos dos associados 
 * Necessário ter instalado o Maven.
 * Necessário ter o Docker e Docker-Compose instalado caso deseje subir em container.
 * Necessário alterar configuração do arquivo "application.properties" para indicar caso não utilize container banco de dados Postgres.
+* URL do serviço externo de validação de CPF precisa ser informado no arquivo "application.properties" na propertie "url.valida.cpf"
+* Por padrão a propertie "url.valida.cpf" aponta para um endpoint local de teste.
 
 ## Start da Aplicação ##
 
