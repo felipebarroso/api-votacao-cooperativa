@@ -11,7 +11,7 @@ Este projeto tem o objetivo de registrar e contabilizar os votos dos associados 
 * Aplicação está configurada em três versões (1.0, 1.1 e 1.2) para exemplificação de versionamento.
 * Necessário ter instalado o Maven.
 * Necessário ter o Docker e Docker-Compose instalado caso deseje subir em container.
-* Necessário alterar configuração do arquivo "application.properties" para indicar caso não utilize container banco de dados Postgres.
+* Necessário alterar configuração do arquivo "application.properties" para indicar um banco Postgres caso deseje não utilizar container.
 * URL do serviço externo de validação de CPF precisa ser informado no arquivo "application.properties" na propertie "url.valida.cpf"
 * Por padrão a propertie "url.valida.cpf" aponta para um endpoint local de teste.
 
