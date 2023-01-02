@@ -52,7 +52,7 @@ Arquitetura da implantação em nuvem (utilizada aws como exemplo):
 
 ## ARQUITETURA SUGERIDA ##
 
-Considerando um cenário de centanas de milhares de requisições, que exige da aplicação um processamento assíncrono e escalabilidade, proponho a seguinte arquitetura em nuvem (utilizada aws como exemplo):
+Considerando um cenário de centanas de milhares de requisições, que exige da aplicação um processamento assíncrono, proponho a seguinte arquitetura em nuvem (utilizada aws como exemplo):
 
 ![Diagrama-Arquitetura-Votacao-Cooperativa-AWS](https://user-images.githubusercontent.com/42699918/210192718-ced6850a-92c4-46e4-8b14-f9bfedcc299a.jpg)
 
