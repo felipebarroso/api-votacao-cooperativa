@@ -58,9 +58,13 @@ Considerando um cenário de centanas de milhares de requisições, que exige da 
 
 Nesta arquitetura a implementeção também necessita ser diferente, pois a intensa comunicação com o banco de dados relacional, para consultar e gravar, além da integração com API externa certamente irão onerar o processo. Nessa caso vi a necessidade da utilização de fila, para processar os votos, e cache para realizar as validações ao receber os votos. Sendo assim o processo de registrar um voto foi quebrado em dois fluxos:
 
+1. Receber uma requisição de voto:
+
 ![ReceberVoto](https://user-images.githubusercontent.com/42699918/210192972-4b6f9636-2de1-42bf-b3f3-625f630e366b.jpg)
 
 Primeiro o voto é recebido, realiza as validações necessárias e produz uma mensagem para a fila de processamento de votos, que então dará início ao segundo fluxo:
+
+2. Processar registro dos votos:
 
 ![ProcessarVoto](https://user-images.githubusercontent.com/42699918/210193021-b47fd7df-c6e5-4bc0-ac35-72f36b9013e6.jpg)
 
