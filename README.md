@@ -41,13 +41,13 @@ Arquitetura da implantação local:
 
 ![Diagrama- Arquitetura-Votacao-Cooperativa-Local](https://user-images.githubusercontent.com/42699918/210192286-a6071542-f7a4-4fc5-8996-2ce6f59c5c09.jpg)
 
-Nesta arquitetura o processo de registrar um voto está síncrono, realizando a verificação do CPF em API externa e gravando no banco antes de responder a requisição do voto, como ilustrado no diagrama abaixo. Esta implementação não considerou um cenário de grande fluxo de requisições.
-
-![ReceverVotoSincrono](https://user-images.githubusercontent.com/42699918/210193135-ef298267-73b6-4732-aa87-01d723f0cfd8.jpg)
-
 Arquitetura da implantação em nuvem (utilizada aws como exemplo):
 
 ![Diagrama- Arquitetura-Votacao-Cooperativa-AWS](https://user-images.githubusercontent.com/42699918/210231311-61acc2b1-fe0e-4dd2-b195-8e5cceca52b3.jpg)
+
+Nesta arquitetura o processo de registrar um voto está síncrono, realizando a verificação do CPF em API externa e gravando no banco antes de responder a requisição do voto, como ilustrado no diagrama abaixo. Esta implementação não considerou um cenário de grande fluxo de requisições.
+
+![ReceverVotoSincrono](https://user-images.githubusercontent.com/42699918/210193135-ef298267-73b6-4732-aa87-01d723f0cfd8.jpg)
 
 
 ## ARQUITETURA SUGERIDA ##
