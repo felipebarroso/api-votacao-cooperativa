@@ -1,7 +1,6 @@
 package br.com.cooperativa.controller.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -20,13 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cooperativa.controller.PautaController;
-import br.com.cooperativa.exception.NotFoundException;
 import br.com.cooperativa.model.dto.InicioPautaRequestDto;
 import br.com.cooperativa.model.dto.PautaDto;
 import br.com.cooperativa.model.dto.PautaRequestDto;
-import br.com.cooperativa.model.entity.Assembleia;
 import br.com.cooperativa.model.entity.Pauta;
-import br.com.cooperativa.repository.AssembleiaRepository;
 import br.com.cooperativa.repository.PautaRepository;
 import br.com.cooperativa.service.PautaService;
 
@@ -40,34 +36,23 @@ public class PautaControllerImpl implements PautaController {
 	@Autowired
 	private PautaRepository pautaRepository;
 	
-	@Autowired
-	private AssembleiaRepository assembleiaRepository;
-	
 	
 	@GetMapping("/v1.0")
 	public Page<PautaDto> pesquisar(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page, 
 			@RequestParam(value = "size", defaultValue = "10", required = false)  Integer size) {
-		Page<Pauta> pautas = pautaRepository.findAll(PageRequest.of(page, size));
+		final Page<Pauta> pautas = pautaRepository.findAll(PageRequest.of(page, size));
 		return PautaDto.converterParaDto(pautas);
 	}
 	
 	@GetMapping("/v1.0/{id}")
 	public ResponseEntity<PautaDto> pesquisar(@PathVariable Long id) {
-		return pautaService.pesquisarPautaPorId(id)
-				.map(pauta -> ResponseEntity.ok(new PautaDto(pauta)))
-				.orElse(ResponseEntity.notFound().build());
+		final Pauta pauta = pautaService.pesquisarPautaPorId(id);
+		return ResponseEntity.ok(new PautaDto(pauta));
 	}
 	
 	@PostMapping("/v1.0")
 	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaRequestDto pautaRequestDto) {
-		Optional<Assembleia> assembleia = assembleiaRepository.findById(pautaRequestDto.getAssembleiaId());
-		
-		if(!assembleia.isPresent())
-			throw new NotFoundException("Assembleia informada não encontada");
-		
-		Pauta pauta = pautaRequestDto.converterDtoParaPauta(assembleia.get());
-		pautaRepository.save(pauta);
-		
+		final Pauta pauta = pautaService.cadastrar(pautaRequestDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new PautaDto(pauta));
 	}
 	
@@ -80,7 +65,7 @@ public class PautaControllerImpl implements PautaController {
 	
 	@PutMapping("/v1.0/contabiliza")
 	public ResponseEntity<List<PautaDto>> contabilizarVotos() {
-		List<PautaDto> pautasEncerradas = pautaService.pesquisarPautasEncerradasParaContabilizarVotos();
+		final List<PautaDto> pautasEncerradas = pautaService.pesquisarPautasEncerradasParaContabilizarVotos();
 		return ResponseEntity.ok(pautasEncerradas);
 	}
 	

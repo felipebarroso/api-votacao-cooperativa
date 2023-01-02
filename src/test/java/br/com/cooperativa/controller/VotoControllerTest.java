@@ -1,7 +1,6 @@
 package br.com.cooperativa.controller;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,10 +58,10 @@ public class VotoControllerTest {
 				.cpfAssociado("00000000000")
 				.pautaId(ID)
 				.build();
-		final Optional<Pauta> pautaOp = Optional.of(construirPauta(LocalDateTime.now(), LocalDateTime.now().plusMinutes(5)));
+		final Pauta pauta = construirPauta(LocalDateTime.now(), LocalDateTime.now().plusMinutes(5));
 		
-		Mockito.when(this.pautaService.pesquisarPautaPorId(registroVotoRequestDto.getPautaId())).thenReturn(pautaOp);
-		Mockito.when(this.pautaService.validarSeSessaoPodeSerVotada(pautaOp.get())).thenReturn(pautaOp.get());
+		Mockito.when(this.pautaService.pesquisarPautaPorId(registroVotoRequestDto.getPautaId())).thenReturn(pauta);
+		Mockito.when(this.pautaService.validarSeSessaoPodeSerVotada(pauta)).thenReturn(pauta);
 		
 		RestAssuredMockMvc
 			.given()

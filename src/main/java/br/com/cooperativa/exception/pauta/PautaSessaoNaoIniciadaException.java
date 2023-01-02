@@ -4,12 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.FORBIDDEN)
-public class PautaSessaoEncerradaException extends RuntimeException {
+public class PautaSessaoNaoIniciadaException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;
-	private static final String ERRO = "A sessão de votação da pauta já está encerrada";
+	private static final String ERRO = "A sessão de votação da pauta ainda não está iniciada";
 	
-	public PautaSessaoEncerradaException() {
+	public PautaSessaoNaoIniciadaException() {
 		super(ERRO);
 	}
 

@@ -27,8 +27,8 @@ public class SwaggerConfig {
 	}
 
 	public ApiInfo apiInfo10() {
-		return new ApiInfoBuilder().title("API VotaÃ§Ã£o Cooperativa Rest")
-				.description("ServiÃ§o para gerenciamento de votaÃ§Ãµes da cooperativa")
+		return new ApiInfoBuilder().title("API Votação Cooperativa Rest")
+				.description("Serviço para gerenciamento de votações da cooperativa")
 				.version("1.0").build();
 	}
 	
@@ -46,7 +46,7 @@ public class SwaggerConfig {
 
 	public ApiInfo apiInfo11() {
 		return new ApiInfoBuilder().title("Teste de versionamento 1.1")
-				.description("ServiÃ§o para gerenciamento de votaÃ§Ãµes da cooperativa")
+				.description("Serviço para gerenciamento de votações da cooperativa")
 				.version("1.1").build();
 	}
 	
@@ -63,7 +63,7 @@ public class SwaggerConfig {
 
 	public ApiInfo apiInfo12() {
 		return new ApiInfoBuilder().title("Teste de versionamento 1.2")
-				.description("ServiÃ§o para gerenciamento de votaÃ§Ãµes da cooperativa")
+				.description("Serviço para gerenciamento de votações da cooperativa")
 				.version("1.2").build();
 	}
 

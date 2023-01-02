@@ -23,20 +23,19 @@ public class CpfService {
 	@Value("${url.valida.cpf}")
 	private String urlValidacaoCpf;
 	
-	// TODO
-	// refatorar requisicao e tratamento de erro
 	public Optional<RespostaRequisicaoCpfDto> validarCpfAssociado(final RegistroVotoRequestDto registroVotoRequestDto) {
 		log.info("validarCpfAssociado");
 		String endpoint = this.urlValidacaoCpf.replace("CPF", registroVotoRequestDto.getCpfAssociado());
 		
-		final Optional<RespostaRequisicaoCpfDto> respostaRequisicaoCpfDto = Optional.of(endpoint).flatMap(url -> {
+		final Optional<RespostaRequisicaoCpfDto> respostaRequisicaoCpfDto = Optional.of(endpoint)
+				.flatMap(url -> {
                     try {
                         return RequestUtil.makeRequest(url, null);
                     } catch (GenericException err) {
                         throw new GenericException("Erro ao consultar CPF");
                     }
                 })
-                .map(resp -> JsonUtil.mapFromJson(resp, RespostaRequisicaoCpfDto.class));
+                .map(response -> JsonUtil.mapFromJson(response, RespostaRequisicaoCpfDto.class));
         
         return respostaRequisicaoCpfDto;
 	}

@@ -20,6 +20,7 @@ import br.com.cooperativa.model.dto.AssembleiaDto;
 import br.com.cooperativa.model.dto.AssembleiaRequestDto;
 import br.com.cooperativa.model.entity.Assembleia;
 import br.com.cooperativa.repository.AssembleiaRepository;
+import br.com.cooperativa.service.AssembleiaService;
 
 @RestController
 @RequestMapping("/assembleias")
@@ -27,6 +28,9 @@ public class AssembleiaControllerImpl implements AssembleiaController {
 	
 	@Autowired
 	private AssembleiaRepository assembleiaRepository;
+	
+	@Autowired
+	private AssembleiaService assembleiaService;
 	
 	
 	@GetMapping({"/v1.0", "/v1.1", "/v1.2"})
@@ -38,15 +42,13 @@ public class AssembleiaControllerImpl implements AssembleiaController {
 	
 	@GetMapping({"/v1.0/{id}", "/v1.1/{id}"})
 	public ResponseEntity<AssembleiaDto> pesquisar(@PathVariable Long id) {
-		return assembleiaRepository.findById(id)
-				.map(assembleia -> ResponseEntity.ok(new AssembleiaDto(assembleia)))
-				.orElse(ResponseEntity.notFound().build());
+		final Assembleia assembleia = assembleiaService.pesquisarAssembleiaPorId(id);
+		return ResponseEntity.ok(new AssembleiaDto(assembleia));
 	}
 	
 	@PostMapping("/v1.0")
 	public ResponseEntity<AssembleiaDto> cadastrar(@RequestBody @Valid AssembleiaRequestDto assembleiaRequestDto) {
-		Assembleia assembleia = assembleiaRequestDto.converterDtoParaAssembleia();
-		assembleiaRepository.save(assembleia);
+		final Assembleia assembleia = assembleiaService.cadastrarAssembleia(assembleiaRequestDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new AssembleiaDto(assembleia));
 	}
 	

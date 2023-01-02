@@ -41,8 +41,5 @@ public @Data class Voto implements Serializable {
 	
 	@Column(name = "DT_VOTO", nullable = false)
 	private LocalDateTime dataVoto;
-	
-	@Column(name = "BL_VOTO_VALIDO", nullable = true)
-	private Boolean votoValido;
 
 }

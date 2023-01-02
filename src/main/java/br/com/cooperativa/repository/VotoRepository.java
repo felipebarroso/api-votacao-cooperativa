@@ -33,14 +33,5 @@ public interface VotoRepository extends JpaRepository<Voto, Long> {
 			+ " 	AND voto.cpfAssociado = :cpfAssociado")
 	Optional<Voto> pesquisarVotoPorAssociadoEPauta(@Param("pautaId") Long pautaId, @Param("dataInicio") LocalDateTime dataInicio, 
 			@Param("dataFim") LocalDateTime dataFim, @Param("cpfAssociado") String cpfAssociado);
-
-	@Query("SELECT COUNT(voto) "
-			+ " FROM Voto voto "
-			+ " WHERE voto.dataVoto >= :dataInicio "
-			+ "		AND voto.dataVoto <= :dataFim "
-			+ " 	AND voto.pautaId = :pautaId "
-			+ " 	AND voto.votoValido IS NULL")
-	Integer pesquisarQuantidadeDeVotosPendentesDeValidacao(@Param("pautaId") Long id, @Param("dataInicio") LocalDateTime dataInicioVotacao,
-			@Param("dataFim") LocalDateTime dataFimVotacao);
 	
 }

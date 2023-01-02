@@ -71,8 +71,7 @@ public class VotarTest {
 			.then()
 				.log().all()
 				.statusCode(HttpStatus.CREATED.value())
-//				.body("id", Matchers.is(1));
-				.body(containsString("registrado"));
+				.body(containsString("Seu voto foi registrado com sucesso."));
 	}
 
 }
