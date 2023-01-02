@@ -5,7 +5,7 @@ Este projeto tem o objetivo de registrar e contabilizar os votos dos associados 
 ## Configurações do Projeto ##
 
 * Aplicação com Spring-Boot 2 e Java 11.
-* Utiliza lombok, necessário instalar na IDE (utilizado Spring Tool Suite 4).
+* Utiliza lombok, necessário instalar na IDE (utilizado Spring Tool Suite 4). https://projectlombok.org/download
 * Start configurado para porta 8080.
 * Swagger pode ser acessado em http://localhost:8080/swagger-ui.html#
 * Aplicação está configurada em três versões (1.0, 1.1 e 1.2) para exemplificação de versionamento.
