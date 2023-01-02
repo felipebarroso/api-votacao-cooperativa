@@ -25,7 +25,7 @@ public class CpfService {
 	
 	public Optional<RespostaRequisicaoCpfDto> validarCpfAssociado(final RegistroVotoRequestDto registroVotoRequestDto) {
 		log.info("validarCpfAssociado");
-		String endpoint = this.urlValidacaoCpf.replace("CPF", registroVotoRequestDto.getCpfAssociado());
+		String endpoint = this.urlValidacaoCpf.replace("{cpf}", registroVotoRequestDto.getCpfAssociado());
 		
 		final Optional<RespostaRequisicaoCpfDto> respostaRequisicaoCpfDto = Optional.of(endpoint)
 				.flatMap(url -> {
