@@ -105,7 +105,7 @@ public class PautaService {
 	public Pauta contabilizarVotosDaSessaoSeProcessoFinalizado(Pauta pauta) {
 		log.info("contabilizarVotosDaSessaoSeProcessoFinalizado");
 		if(pauta.podeContabilizarVotosDaSessao()) {
-			log.info(" - Contabilizando Votos da Pauta ?", pauta.getId());
+			log.info(" - Contabilizando Votos da Pauta " + pauta.getId());
 			final QuantidadeVotosDto quantidadeVotosDto = votoRepository.pesquisarQuantidadeDeVotosPorPautaFinalizada(pauta.getId(), 
 					pauta.getDataInicioVotacao(), pauta.getDataFimVotacao());
 			pauta.setQuantidadeVotosSim(quantidadeVotosDto.getQuantidadeVotosSim());
