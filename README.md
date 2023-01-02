@@ -2,7 +2,7 @@
 
 Este projeto tem o objetivo de registrar e contabilizar os votos dos associados de uma coperativa durante as sessões de pautas abertas em assembleias.
 
-## Configurações do Projeto ##
+## Informações do Projeto ##
 
 * Aplicação com Spring-Boot 2 e Java 11.
 * Utiliza lombok, necessário instalar na IDE (utilizado Spring Tool Suite 4). https://projectlombok.org/download
